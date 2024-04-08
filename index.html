@@ -51,4 +51,22 @@
             speech.text = document.querySelector("textarea").value;
             window.speechSynthesis.speak(speech);
         });
+
+        voiceSelect.addEventListener('change', () => {
+                let selectedVoiceName = voiceSelect.selectedOptions[0].getAttribute('data-name');
+                let selectedVoiceLang = voiceSelect.selectedOptions[0].getAttribute('data-lang');
+
+                // Find the selected voice from available voices
+                let selectedVoice = voices.find(voice => voice.name === selectedVoiceName && voice.lang === selectedVoiceLang);
+
+                if (selectedVoice) {
+                    speech.voice = selectedVoice;
+                }
+            });
+
+
+
+
+
+        </script>
 </body>
