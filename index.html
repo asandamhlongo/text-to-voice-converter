@@ -23,3 +23,32 @@
             </button>
         </div>
     </div>
+    <script>
+        let speech = new SpeechSynthesisUtterance();
+
+        let voices = [];
+        let voiceSelect = document.getElementById("voiceSelect");
+
+        function populateVoiceList() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = ''; // Clear existing options
+
+            voices.forEach((voice, i) => {
+                const option = document.createElement('option');
+                option.textContent = voice.name + ' (' + voice.lang + ')';
+                option.setAttribute('data-lang', voice.lang);
+                option.setAttribute('data-name', voice.name);
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+
+        document.querySelector("#button").addEventListener("click", () => {
+            speech.text = document.querySelector("textarea").value;
+            window.speechSynthesis.speak(speech);
+        });
+</body>
